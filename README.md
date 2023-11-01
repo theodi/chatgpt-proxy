@@ -1,5 +1,3 @@
-Certainly! Here's a basic README.md for your code, explaining its purpose and how to use it as a proxy for ChatGPT:
-
 # ChatGPT Proxy
 
 The ChatGPT Proxy is a Node.js application that acts as a proxy for interacting with OpenAI's ChatGPT API. It provides a simple HTTP server that listens to incoming requests, validates the requests, and forwards them to the ChatGPT API, returning the responses to the clients.
@@ -76,5 +74,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - This project uses the [OpenAI Node.js library](https://github.com/openai/openai-node) for API communication.
 - Special thanks to OpenAI for providing the ChatGPT API.
-
-Feel free to customize and extend this README.md to provide more detailed information or additional usage instructions if necessary.
