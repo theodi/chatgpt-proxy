@@ -33,8 +33,8 @@
       "EXPECTED_START": "desired_start_string",
       "HOST": "localhost",
       "PORT": "3000",
-      "SSL_KEY_PATH": "/path/to/your/keyfile.key", // Add your SSL key file path
-      "SSL_PEM_PATH": "/path/to/your/pemfile.pem"  // Add your SSL PEM file path
+      "SSL_KEY_PATH": "/path/to/your/keyfile.key",
+      "SSL_PEM_PATH": "/path/to/your/pemfile.pem" 
     }
   }
 }
