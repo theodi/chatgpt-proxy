@@ -21,7 +21,7 @@ app.use(morgan("dev"));
 
 app.post("/openai-completion", async (req, res) => {
   console.log("Received request:", req.body);
-  if (!req.body.prompt || !req.body.prompt.startsWith(EXPECTED_START)) {
+  if (!req.body.messages[0].content.includes(EXPECTED_START)) {
     return res.status(400).json({ error: "Invalid prompt content." });
   }
   try {
