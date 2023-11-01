@@ -7,17 +7,16 @@ require("dotenv").config();
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const EXPECTED_START = process.env.EXPECTED_START;
+const HOST = process.env.HOST || "localhost"; // Use the HOST environment variable or default to "localhost"
+const PORT = process.env.PORT || 3000; // Use the PORT environment variable or default to 3000
 
 const app = express();
-
-const PORT = process.env.PORT || 3000;
 
 const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(morgan("dev"));
-
 
 app.post("/openai-completion", async (req, res) => {
   console.log("Received request:", req.body);
@@ -35,6 +34,6 @@ app.post("/openai-completion", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`Server is running on http://${HOST}:${PORT}`);
 });
