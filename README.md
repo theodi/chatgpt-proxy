@@ -16,19 +16,21 @@ Before using the ChatGPT Proxy, you need to have the following prerequisites set
    - `EXPECTED_START`: A string that should be present at the start of the prompt to validate incoming requests.
    - `HOST` (optional): The hostname to bind to (default: "localhost").
    - `PORT` (optional): The port to listen on (default: 3000).
+   - `SSL_KEY_PATH` (optional): Path to your SSL key file for HTTPS (required if running with SSL).
+   - `SSL_PEM_PATH` (optional): Path to your SSL PEM file for HTTPS (required if running with SSL).
 
 ## Installation
 
 1. Clone this repository to your local machine:
 
    ```
-   git clone https://github.com/theodi/chatgpt-proxy.git
+   git clone https://github.com/your-username/chargpt-proxy.git
    ```
 
 2. Navigate to the project directory:
 
    ```
-   cd chatgpt-proxy
+   cd chargpt-proxy
    ```
 
 3. Install the required Node.js packages using npm:
@@ -46,6 +48,8 @@ Before using the ChatGPT Proxy, you need to have the following prerequisites set
    EXPECTED_START=desired_start_string
    HOST=localhost
    PORT=3000
+   SSL_KEY_PATH=/path/to/your/keyfile.key (required for HTTPS)
+   SSL_PEM_PATH=/path/to/your/pemfile.pem (required for HTTPS)
    ```
 
 2. Start the ChatGPT Proxy server:
@@ -74,3 +78,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - This project uses the [OpenAI Node.js library](https://github.com/openai/openai-node) for API communication.
 - Special thanks to OpenAI for providing the ChatGPT API.
+
+Feel free to customize and extend this README.md to provide more detailed information or additional usage instructions if necessary.
+```
+
+Please make sure to replace `"your-username"` with your actual GitHub username in the clone URL and update any other placeholders with your specific information as needed.
