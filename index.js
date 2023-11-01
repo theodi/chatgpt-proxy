@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 require("dotenv").config();
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const EXPECTED_START = process.env.EXPECTED_START;
 
 const app = express();
 
@@ -15,10 +16,8 @@ const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(morgan("dev")); // Logging middleware
+app.use(morgan("dev"));
 
-const EXPECTED_START =
-  "Anticipate and address the potential impacts of a product or service on society.";
 
 app.post("/openai-completion", async (req, res) => {
   console.log("Received request:", req.body);
