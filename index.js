@@ -22,6 +22,11 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 
+// Add a route for the home page ("/") to return "Hello, World!"
+app.get("/", (req, res) => {
+  res.status(200).send("Hello, World!");
+});
+
 app.post("/openai-completion", async (req, res) => {
   console.log("Received request:", req.body);
   if (!req.body.prompt || !req.body.prompt.startsWith(EXPECTED_START)) {
@@ -36,6 +41,11 @@ app.post("/openai-completion", async (req, res) => {
     console.error("Error in /openai-completion route:", error);
     res.status(error.status).json({ error: error.name });
   }
+});
+
+// Handle 404 (Not Found) errors for any other routes
+app.use((req, res, next) => {
+  res.status(404).json({ error: "Not Found" });
 });
 
 // Create an HTTPS server with the provided key and PEM files
