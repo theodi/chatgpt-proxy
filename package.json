@@ -20,5 +20,21 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/theodi/chargpt-proxy"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "env-cmd": {
+    "development": {
+      "OPENAI_API_KEY": "your_openai_api_key",
+      "EXPECTED_START": "desired_start_string",
+      "HOST": "localhost",
+      "PORT": "3000",
+      "SSL_KEY_PATH": "/path/to/your/keyfile.key", // Add your SSL key file path
+      "SSL_PEM_PATH": "/path/to/your/pemfile.pem"  // Add your SSL PEM file path
+    }
   }
 }
