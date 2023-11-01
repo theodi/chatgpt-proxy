@@ -3,12 +3,16 @@ const OpenAI = require("openai");
 const cors = require("cors");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
+const fs = require("fs");
+const https = require("https"); // Import the 'https' module
 require("dotenv").config();
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const EXPECTED_START = process.env.EXPECTED_START;
-const HOST = process.env.HOST || "localhost"; // Use the HOST environment variable or default to "localhost"
-const PORT = process.env.PORT || 3000; // Use the PORT environment variable or default to 3000
+const HOST = process.env.HOST || "localhost";
+const PORT = process.env.PORT || 3000;
+const SSL_KEY_PATH = process.env.SSL_KEY_PATH || null; // Path to your SSL key file
+const SSL_PEM_PATH = process.env.SSL_PEM_PATH || null; // Path to your SSL PEM file
 
 const app = express();
 
@@ -34,6 +38,19 @@ app.post("/openai-completion", async (req, res) => {
   }
 });
 
-app.listen(PORT, HOST, () => {
-  console.log(`Server is running on http://${HOST}:${PORT}`);
-});
+// Create an HTTPS server with the provided key and PEM files
+if (SSL_KEY_PATH && SSL_PEM_PATH) {
+  const privateKey = fs.readFileSync(SSL_KEY_PATH, "utf8");
+  const certificate = fs.readFileSync(SSL_PEM_PATH, "utf8");
+  const credentials = { key: privateKey, cert: certificate };
+  const httpsServer = https.createServer(credentials, app);
+
+  httpsServer.listen(PORT, HOST, () => {
+    console.log(`Server is running on https://${HOST}:${PORT}`);
+  });
+} else {
+  // If key and PEM file paths are not provided, fall back to HTTP
+  app.listen(PORT, HOST, () => {
+    console.log(`Server is running on http://${HOST}:${PORT}`);
+  });
+}
