@@ -8,7 +8,7 @@ const https = require("https"); // Import the 'https' module
 require("dotenv").config();
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-const EXPECTED_START = process.env.EXPECTED_START;
+const EXPECTED_STARTS = process.env.EXPECTED_STARTS.split(","); // Split into an array
 const HOST = process.env.HOST || "localhost";
 const PORT = process.env.PORT || 3000;
 const SSL_KEY_PATH = process.env.SSL_KEY_PATH || null; // Path to your SSL key file
@@ -28,8 +28,12 @@ app.get("/", (req, res) => {
 });
 
 app.post("/openai-completion", async (req, res) => {
-  console.log("Received request:", req.body);
-  if (!req.body.messages[0].content.includes(EXPECTED_START)) {
+
+  // Check if the received prompt starts with any of the expected starting strings
+  const messageContent = req.body.messages[0].content;
+  const isValidStart = EXPECTED_STARTS.some(start => messageContent.includes(start));
+
+  if (!isValidStart) {
     return res.status(400).json({ error: "Invalid prompt content." });
   }
   try {
