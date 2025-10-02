@@ -57,7 +57,7 @@ app.post("/openai-completion", async (req, res) => {
     return res.status(400).json({ error: "Invalid prompt content." });
   }
   try {
-    const { max_tokens, ...restBody } = req.body || {};
+    const { max_tokens, temperature, ...restBody } = req.body || {};
     const requestBody = {
       ...restBody,
       model: OPENAI_MODEL,
