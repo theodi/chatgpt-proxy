@@ -14,6 +14,7 @@ const PORT = process.env.PORT || 3000;
 const SSL_KEY_PATH = process.env.SSL_KEY_PATH || null; // Path to your SSL key file
 const SSL_PEM_PATH = process.env.SSL_PEM_PATH || null; // Path to your SSL PEM file
 const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-5";
+const MAX_COMPLETION_TOKENS = process.env.MAX_COMPLETION_TOKENS || 1000;
 
 const app = express();
 
@@ -56,9 +57,11 @@ app.post("/openai-completion", async (req, res) => {
     return res.status(400).json({ error: "Invalid prompt content." });
   }
   try {
+    const { max_tokens, ...restBody } = req.body || {};
     const requestBody = {
-      ...req.body,
+      ...restBody,
       model: OPENAI_MODEL,
+      max_completion_tokens: MAX_COMPLETION_TOKENS,
     };
 
     const response = await openai.chat.completions.create(requestBody);
