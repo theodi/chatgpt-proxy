@@ -37,6 +37,16 @@ app.post("/openai-completion", async (req, res) => {
     .replace(/&nbsp;/gi, " ") // convert nbsp to spaces
     .replace(/\s+/g, " ") // collapse whitespace
     .trim();
+  // DEBUG LOGS
+  try {
+    console.log("DEBUG rawContent:", rawContent);
+    console.log("DEBUG normalizedContent:", messageContent);
+    console.log("DEBUG EXPECTED_STARTS:", EXPECTED_STARTS);
+    const debugIncludes = EXPECTED_STARTS.map(start => ({ start, includes: messageContent.includes(start) }));
+    console.log("DEBUG includes per start:", debugIncludes);
+  } catch (_) {
+    // no-op if console/logging fails for any reason
+  }
   const isValidStart = EXPECTED_STARTS.some(start => messageContent.includes(start));
 
   if (!isValidStart) {
