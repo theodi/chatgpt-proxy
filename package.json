@@ -30,7 +30,8 @@
   "env-cmd": {
     "development": {
       "OPENAI_API_KEY": "your_openai_api_key",
-      "EXPECTED_START": "desired_start_string",
+      "EXPECTED_STARTS": "desired_start_string",
+      "OPENAI_MODEL": "gpt-5",
       "HOST": "localhost",
       "PORT": "3000",
       "SSL_KEY_PATH": "/path/to/your/keyfile.key",

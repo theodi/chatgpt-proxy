@@ -13,7 +13,8 @@ Before using the ChatGPT Proxy, you need to have the following prerequisites set
 3. Environment Variables: Create a `.env` file in the project directory or configure environment variables in your deployment environment with the following variables:
 
    - `OPENAI_API_KEY`: Your OpenAI API key.
-   - `EXPECTED_START`: A string that should be present at the start of the prompt to validate incoming requests.
+   - `EXPECTED_STARTS`: Comma-separated list of strings expected in the first message content to validate requests.
+   - `OPENAI_MODEL` (optional): Default model to use when the client request omits `model` (default: `gpt-5`).
    - `HOST` (optional): The hostname to bind to (default: "localhost").
    - `PORT` (optional): The port to listen on (default: 3000).
    - `SSL_KEY_PATH` (optional): Path to your SSL key file for HTTPS (required if running with SSL).
@@ -45,7 +46,8 @@ Before using the ChatGPT Proxy, you need to have the following prerequisites set
 
    ```
    OPENAI_API_KEY=your_openai_api_key
-   EXPECTED_START=desired_start_string
+   EXPECTED_STARTS=desired_start_string_one,another_start
+   OPENAI_MODEL=gpt-5
    HOST=localhost
    PORT=3000
    SSL_KEY_PATH=/path/to/your/keyfile.key (required for HTTPS)
@@ -58,17 +60,30 @@ Before using the ChatGPT Proxy, you need to have the following prerequisites set
    npm start
    ```
 
-3. The server will now be running and listening for incoming requests. You can send POST requests to `http://localhost:3000/openai-completion` with a JSON payload containing your prompt.
+3. The server will now be running and listening for incoming requests. You can send POST requests to `http://localhost:3000/openai-completion` with a JSON payload containing your messages. If you omit `model`, the server will inject the default from `OPENAI_MODEL`.
 
    Example POST request:
 
    ```json
    {
-     "prompt": "Translate the following English text to French: 'Hello, world.'"
+     "messages": [
+       { "role": "user", "content": "Your expected start ... actual prompt" }
+     ]
    }
    ```
 
-4. The proxy will validate the request and forward it to the ChatGPT API, returning the response to the client.
+   Or explicitly specify a model to override the default:
+
+   ```json
+   {
+     "model": "gpt-4o-mini",
+     "messages": [
+       { "role": "user", "content": "Your expected start ... actual prompt" }
+     ]
+   }
+   ```
+
+4. The proxy will validate that the first message `content` includes one of `EXPECTED_STARTS`, then forward the request to the OpenAI API, returning the response.
 
 ## License
 

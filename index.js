@@ -13,6 +13,7 @@ const HOST = process.env.HOST || "localhost";
 const PORT = process.env.PORT || 3000;
 const SSL_KEY_PATH = process.env.SSL_KEY_PATH || null; // Path to your SSL key file
 const SSL_PEM_PATH = process.env.SSL_PEM_PATH || null; // Path to your SSL PEM file
+const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-5";
 
 const app = express();
 
@@ -37,9 +38,12 @@ app.post("/openai-completion", async (req, res) => {
     return res.status(400).json({ error: "Invalid prompt content." });
   }
   try {
-    const response = await openai.chat.completions.create({
+    const requestBody = {
       ...req.body,
-    });
+      model: req.body.model || OPENAI_MODEL,
+    };
+
+    const response = await openai.chat.completions.create(requestBody);
     res.status(200).send(response.data || response);
   } catch (error) {
     console.error("Error in /openai-completion route:", error);
