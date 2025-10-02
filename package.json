@@ -25,7 +25,8 @@
     "node": ">=14"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "debug": "DEBUG=true node index.js"
   },
   "env-cmd": {
     "development": {
