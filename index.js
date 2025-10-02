@@ -58,7 +58,7 @@ app.post("/openai-completion", async (req, res) => {
   try {
     const requestBody = {
       ...req.body,
-      model: req.body.model || OPENAI_MODEL,
+      model: OPENAI_MODEL,
     };
 
     const response = await openai.chat.completions.create(requestBody);
