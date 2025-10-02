@@ -47,7 +47,7 @@ app.post("/openai-completion", async (req, res) => {
     res.status(200).send(response.data || response);
   } catch (error) {
     console.error("Error in /openai-completion route:", error);
-    res.status(error.status).json({ error: error.name });
+    res.status(error.status).json({ error: error });
   }
 });
 
