@@ -31,7 +31,12 @@ app.get("/", (req, res) => {
 app.post("/openai-completion", async (req, res) => {
 
   // Check if the received prompt starts with any of the expected starting strings
-  const messageContent = req.body.messages[0].content;
+  const rawContent = (req.body && req.body.messages && req.body.messages[0] && req.body.messages[0].content) || "";
+  const messageContent = String(rawContent)
+    .replace(/<[^>]*>/g, " ") // strip HTML tags
+    .replace(/&nbsp;/gi, " ") // convert nbsp to spaces
+    .replace(/\s+/g, " ") // collapse whitespace
+    .trim();
   const isValidStart = EXPECTED_STARTS.some(start => messageContent.includes(start));
 
   if (!isValidStart) {
