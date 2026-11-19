@@ -4,18 +4,19 @@
   "description": "A proxy server for ChatGPT by The Open Data Institute",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "debug": "DEBUG=true node index.js"
   },
   "author": "The Open Data Institute",
   "license": "MIT",
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.10.0",
     "axios": "^1.5.1",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "morgan": "^1.10.0",
-    "openai": "^4.12.4"
+    "morgan": "^1.10.0"
   },
   "repository": {
     "type": "git",
@@ -24,19 +25,15 @@
   "engines": {
     "node": ">=14"
   },
-  "scripts": {
-    "start": "node index.js",
-    "debug": "DEBUG=true node index.js"
-  },
   "env-cmd": {
     "development": {
-      "OPENAI_API_KEY": "your_openai_api_key",
+      "ANTHROPIC_API_KEY": "your_anthropic_api_key",
+      "ANTHROPIC_MODEL": "claude-sonnet-5-5",
       "EXPECTED_STARTS": "desired_start_string",
-      "OPENAI_MODEL": "gpt-5",
       "HOST": "localhost",
       "PORT": "3000",
       "SSL_KEY_PATH": "/path/to/your/keyfile.key",
-      "SSL_PEM_PATH": "/path/to/your/pemfile.pem" 
+      "SSL_PEM_PATH": "/path/to/your/pemfile.pem"
     }
   }
 }
